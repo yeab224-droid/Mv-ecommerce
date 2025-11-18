@@ -2,9 +2,9 @@
 
 
 export default function Home() {
-  return (
+  return ( 
   <div>
-<p className="text-rose-500">hello world</p>
+<p>hello world</p>
       
 
     </div>
