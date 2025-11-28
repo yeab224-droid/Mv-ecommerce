@@ -19,4 +19,8 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   )
 }
 
+<<<<<<< HEAD
 export { Input }
+=======
+export { Input }
+>>>>>>> payload-integration

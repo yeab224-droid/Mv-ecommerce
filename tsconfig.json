@@ -1,7 +1,15 @@
 {
   "compilerOptions": {
     "target": "ES2017",
+<<<<<<< HEAD
     "lib": ["dom", "dom.iterable", "esnext"],
+=======
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+>>>>>>> payload-integration
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -19,7 +27,16 @@
       }
     ],
     "paths": {
+<<<<<<< HEAD
       "@/*": ["./src/*"]
+=======
+      "@/*": [
+        "./src/*"
+      ],
+      "@payload-config": [
+        "./src/payload.config.ts"
+      ]
+>>>>>>> payload-integration
     }
   },
   "include": [
@@ -30,5 +47,12 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
+<<<<<<< HEAD
   "exclude": ["node_modules"]
 }
+=======
+  "exclude": [
+    "node_modules"
+  ]
+}
+>>>>>>> payload-integration

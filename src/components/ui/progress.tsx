@@ -14,9 +14,14 @@ function Progress({
     <ProgressPrimitive.Root
       data-slot="progress"
       className={cn(
+<<<<<<< HEAD
         "relative h-2 w-full overflow-hidden rounded-full",
         //modified class
         " border bg-white",
+=======
+        " relative h-3 w-full overflow-hidden rounded-full",
+         " border bg-white",
+>>>>>>> payload-integration
         className
       )}
       {...props}
