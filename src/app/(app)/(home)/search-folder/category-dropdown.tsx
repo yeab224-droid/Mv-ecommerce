@@ -7,14 +7,15 @@ import { Category } from "@/payload-types";
 import { cn } from "@/lib/utils";
 import { useDropdownPosition } from "./use-dropdown-position";
 import { SubcategoryMenu } from "./subcategory-menu";
-import { CustomCategory } from "../types";
+import { CategoriesGetManyOutput } from "@/modules/categories/types";
+
 
 
 
 
 
 interface Props {
-      category: CustomCategory;
+      category: CategoriesGetManyOutput[1];
     isActive?: boolean;
     isNavigationHovered?: boolean;
 }
@@ -76,7 +77,7 @@ export const CategoryDropdown = ({ category, isActive, isNavigationHovered }:
             )}
             </div>
             <SubcategoryMenu 
-            category={category}
+              category={category}
             isOpen={isOpen}
             position={dropdownPosition}
             />
