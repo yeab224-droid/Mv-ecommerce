@@ -1,12 +1,12 @@
 "use client"
+
 import { useEffect, useRef, useState } from "react";
 import { ListFilterIcon } from "lucide-react";
 
 import { CategoriesSidebar } from "./categories-sidebar";
 import  { CategoryDropdown}from "./category-dropdown";
-import { CustomCategory } from "../types";
 
-import { Category } from "@/payload-types";
+import { CategoriesGetManyOutput } from "@/modules/categories/types";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -14,8 +14,9 @@ import { cn } from "@/lib/utils";
 
 
 
+
 interface props {
-   data: CustomCategory[];
+   data: CategoriesGetManyOutput;
 };
 export const Categories = ({data}: props) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -68,7 +69,7 @@ setVisibleCount(visible);
 
  <div className="relative w-full">
  
-<CategoriesSidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen} data={data}/>
+<CategoriesSidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen} />
 
   <div ref={measureRef}
     className="absolute opacity-0 pointer-events-none flex "
