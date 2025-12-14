@@ -13,7 +13,7 @@
     "db:reset": "bun run db:fresh && bun run db:seed"
   },
   "dependencies": {
-    "@hookform/resolvers": "^5.2.2",
+    "@hookform/resolvers": "^3.5.13",
     "@payloadcms/db-mongodb": "^3.65.0",
     "@payloadcms/next": "^3.65.0",
     "@payloadcms/richtext-lexical": "^3.65.0",
@@ -70,7 +70,7 @@
     "superjson": "^2.2.6",
     "tailwind-merge": "^3.4.0",
     "vaul": "^1.1.2",
-    "zod": "3.24.2"
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
