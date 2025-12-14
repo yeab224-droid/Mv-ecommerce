@@ -21,7 +21,7 @@ import { Form,
 
  import { loginSchema } from "../../schemas";
 import { useTRPC } from "@/trpc/client";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { error } from "console";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -36,13 +36,14 @@ export const SignInView = () =>{
   const router = useRouter();
 
   const trpc = useTRPC();
+  const queryClient= useQueryClient();
+
   const login = useMutation(trpc.auth.login.mutationOptions({
  onError: (error) =>{
       toast.error(error.message)
     },
-      onSuccess: () =>{
-          router.push("/");
-      
+      onSuccess: async  ()  =>{
+
     }
   }));
 

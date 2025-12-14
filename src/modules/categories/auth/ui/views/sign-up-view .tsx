@@ -22,7 +22,7 @@ import { Form,
 
  import { registerSchema } from "../../schemas";
 import { useTRPC } from "@/trpc/client";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { error } from "console";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -37,12 +37,17 @@ export const SignUpView = () =>{
   const router = useRouter();
 
   const trpc = useTRPC();
+    const queryClient= useQueryClient();
+
   const register = useMutation(trpc.auth.register.mutationOptions({
  onError: (error) =>{
       toast.error(error.message)
     },
-      onSuccess: () =>{
+      onSuccess: async () =>{
+        await  queryClient.invalidateQueries(trpc.auth.session.queryFilter());
           router.push("/");
+      
+       
       
     }
   }));
