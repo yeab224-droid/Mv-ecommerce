@@ -1,6 +1,6 @@
 "use client";
-import z from "zod";
 
+import z from "zod";
 import Link from "next/link";
 import { Poppins} from "next/font/google";
 import {useForm} from "react-hook-form";
@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 
 import { Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -19,9 +20,10 @@ import { Form,
  import { Input} from "@/components/ui/input";
  import { Button } from "@/components/ui/button";
 
- import { loginSchema } from "../../schemas";
+ import { registerSchema } from "../../schemas";
 import { useTRPC } from "@/trpc/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { error } from "console";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
@@ -31,37 +33,43 @@ const poppins = Poppins({
    weight:["700"]
 });
  
-export const SignInView = () =>{
+export const SignUpView = () =>{
   const router = useRouter();
 
   const trpc = useTRPC();
-  const queryClient= useQueryClient();
+    const queryClient= useQueryClient();
 
-  const login = useMutation(trpc.auth.login.mutationOptions({
+  const register = useMutation(trpc.auth.register.mutationOptions({
  onError: (error) =>{
       toast.error(error.message)
     },
-      onSuccess:async () =>{
+      onSuccess: async () =>{
         await  queryClient.invalidateQueries(trpc.auth.session.queryFilter());
           router.push("/");
+      
+       
+      
     }
   }));
 
    
   
- const form = useForm <z.infer<typeof loginSchema>>({
+ const form = useForm <z.infer<typeof registerSchema>>({
     mode:"all",
-  resolver: zodResolver(loginSchema),
+  resolver: zodResolver(registerSchema),
   defaultValues:{
-  email: "",  
+  email: "",
   password: "",
-  
+  username: "",
 },
  });
- const onSubmit = (values: z.infer<typeof loginSchema>) =>{
-   login.mutate(values);
+ const onSubmit = (values: z.infer<typeof registerSchema>) =>{
+   register.mutate(values);
   };
+ const username = form.watch("username");
+ const usernameErrors = form.formState.errors.username;
 
+ const showPreview= username && !usernameErrors;
     return (
         <div className="grid grid-cols-1 lg:grid-cols-5">
           <div className="bg-[#F4F4F0] h-screen w-full lg:col-span-3 overflow-y-auto">
@@ -81,17 +89,34 @@ export const SignInView = () =>{
                   variant="ghost"
                   size="sm"
                   className="text-base border-none underline">
-                    <Link prefetch href="/sign-up">
-                      Sign up
+                    <Link prefetch href="/sign-in">
+                      Sign in
                     </Link>
                   </Button>
                 </div>
                  <h1 className="text-4xl font-medium">
-                  Welcome Back To Funroad.
+                  join over 1m people earning money on Funroad.
                  </h1>
-
-
-               <FormField name="email"
+                 <FormField 
+                 name="username"
+                 render={({field}) =>(
+                  <FormItem>
+                    <FormLabel className="text-base">
+                      username
+                    </FormLabel>
+                    <FormControl>
+                      <Input {...field}/>
+                    </FormControl>
+                    <FormDescription className={cn("hidden", showPreview && "block")}>
+                     your store will be available at&nbsp;
+                     
+                     <strong>{username}</strong>.shop.com
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                 )}/>
+                  <FormField 
+                 name="email"
                  render={({field}) =>(
                   <FormItem>
                     <FormLabel className="text-base">
@@ -119,12 +144,12 @@ export const SignInView = () =>{
                   </FormItem>
                  )}/>
                  <Button
-                    disabled={login.isPending}
+                    disabled={register.isPending}
                      type="submit"
                      size="lg"
                      variant="elevated"
                     className="bg-black text-white hover:bg-pink-400 hover:text-primary">
-                      Log In
+                      Create Account
                     </Button>
               </form>
             </Form>

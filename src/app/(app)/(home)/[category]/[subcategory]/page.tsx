@@ -1,17 +1,30 @@
+import { Suspense } from "react";
+import { ProductList, ProductListSkeleton } from "@/modules/products/ui/components/product-list";
+import { getQueryClient,trpc } from "@/trpc/server";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+
+
 interface props {
     params: Promise<{
-     category: string ; 
-     subcategory: string 
+     subcategory: string ;  
     }>
-}
+};
 
 const Page = async ({params}:props) =>{
-   const {category,subcategory} = await params;
+   const {subcategory} = await params;
+
+   const queryclient = getQueryClient();
+   void queryclient.prefetchQuery(trpc.products.getMany.queryOptions(
+    {category:subcategory}
+   ))
+
     return (
-        <div>
-             Category {category} <br />
-             subcategory {subcategory}
-        </div>
+    <HydrationBoundary state={dehydrate(queryclient)}>
+       <Suspense fallback={ <ProductListSkeleton/>}>
+         <ProductList category={subcategory}/>
+       </Suspense>
+       
+    </HydrationBoundary>
     );
 }
 
