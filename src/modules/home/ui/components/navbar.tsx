@@ -2,7 +2,7 @@
 import { Poppins} from "next/font/google";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { NavbarSidebar} from "./navbar-sidebar";
+import { NavbarSidebar } from "@/modules/home/ui/components/navbar-sidebar"; 
 import { useQuery } from "@tanstack/react-query";
 
 import { cn } from "@/lib/utils";
