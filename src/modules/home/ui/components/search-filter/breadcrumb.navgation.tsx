@@ -20,11 +20,7 @@ import Link from "next/link";
       activeSubcategoryName,}:Props)   =>{
      if (!activeCategoryName || activeCategory === "all")return null;
 
-           console.log({
-  activeCategoryName,
-  activeCategory,
-  activeSubcategoryName,
-});
+  
      return(
 
 
