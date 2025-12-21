@@ -8,6 +8,7 @@ import { loginSchema, registerSchema } from "../schemas";
 import { generateAuthCookie } from "../utils";
 
 
+
 export const authRouter = createTRPCRouter ({
     session:baseProcedure.query(async ({ctx}) =>{
      const headers = await getHeaders();
@@ -39,16 +40,30 @@ export const authRouter = createTRPCRouter ({
                 message:"Username is already taken",
             });
         }
-   
+
+    const tenant = await ctx.db.create({
+                collection:"tenants",
+                 data:{
+                  name:input.username,
+                 slug:input.username,
+                 stripeAccountId:"test"
+            },
+            
+
+      })
         
-    await ctx.db.create({
-       collection: "users" ,
-       data: {
-        email: input.email,
-        username: input.username,
-        password: input.password,
-       }
-      });
+   await ctx.db.create({
+  collection: "users",
+  data: {
+    email: input.email,
+    username: input.username,
+    password: input.password,
+       tenants: [
+      { tenant: tenant.id } // ✅ TS now recognizes 'tenant' inside array
+    ],
+  
+  },
+});
 
           
     const data = await ctx.db.login({
